@@ -20,8 +20,15 @@ diagnose disease or predict an individual's health.
    .\run.ps1
    ```
 
-   The launcher reads the key without displaying it and does not save it in the
-   project.
+   The launcher reads the key without displaying it and saves it outside the
+   project in your Windows account's `.streamlit\secrets.toml`, with access
+   restricted to your account. It reuses the saved key on later launches. If
+   `GEMINI_API_KEY` is already present in the environment, the launcher saves it
+   there automatically the first time.
+
+For Streamlit Community Cloud, deploy `Chatbot.py` from the project repository
+and add `GEMINI_API_KEY` in the app's **Settings → Secrets**. Do not commit API
+keys or a `secrets.toml` file.
 
 Chat defaults to Gemini 3.8 Flash through Google's OpenAI-compatible API. With a
 Gemini key, voice input and voice replies use Gemini audio models and do not need
@@ -33,9 +40,11 @@ If Gemini is temporarily overloaded, chat and transcription retry with
 `gemini-3.1-flash-lite`.
 
 The interface uses a hospital-themed background, a dimensional doctor illustration,
-and a symptom checker with a body-area selector. Choose English or Hindi from the
-sidebar; chat replies, symptom guidance, voice transcription, and spoken replies
-follow the selected language.
+and a symptom checker with a body-area selector. The optional camera scan also
+accepts uploaded JPG, PNG, or WebP images; images are sent to Gemini only after
+the user consents and selects Scan. Choose English or Hindi from the sidebar; chat
+replies, symptom guidance, voice transcription, and spoken replies follow the
+selected language.
 
 For voice chat, enable voice, record a question, and stop the recording to send it.
 The assistant transcribes the recording and automatically attempts to play its answer
@@ -43,7 +52,11 @@ aloud; the audio player remains available if the browser blocks autoplay. This i
 record-and-reply flow, not continuous hands-free streaming. Voice requires a working
 internet connection, a configured provider key, and provider availability; temporary
 service, microphone, or network failures can still occur. Transcription and spoken
-reply each offer a retry when available.
+reply each offer a retry when available. Gemini spoken replies use an original,
+low-pitched, measured AI-assistant style; press Play in the audio player if the
+browser blocks automatic playback. When voice is enabled, Chrome's built-in speech
+engine also provides a **Speak reply** control that does not require a separate TTS
+service or microphone permission.
 
 The app returns general health information and possible self-care suggestions, not
 a diagnosis or a prescription. Seek professional care for concerning or worsening

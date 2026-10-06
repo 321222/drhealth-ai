@@ -18,6 +18,7 @@ GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
 GEMINI_MODEL = "gemini-3.8-flash"
 GEMINI_FALLBACK_MODEL = "gemini-3.1-flash-lite"
 GEMINI_TTS_MODEL = "gemini-3.8-flash-tts"
+GEMINI_TTS_FALLBACK_MODEL = "gemini-3.8-flash-lite-tts"
 NVIDIA_API_URL = "https://integrate.api.nvidia.com/v1"
 NVIDIA_MODEL = "nvidia/nemotron-3.5-lightning-30b-a3b"
 GEMINI_TRANSCRIPTION_PROMPT = (
@@ -38,18 +39,19 @@ LANGUAGES = {
             "medications": "Medications (optional)",
             "privacy": "Your health details and voice are sent to the AI provider. Avoid personal identifiers.",
             "photo_section": "Camera scan (optional)",
-            "photo_help": "Capture the affected area. Capturing uploads the photo to this app; it goes to Gemini only when you consent and scan. Avoid faces and identifying details.",
+            "photo_help": "Capture or upload the affected area. The photo goes to Gemini only when you consent and scan. Avoid faces and identifying details.",
             "photo_capture": "Capture photo",
+            "photo_upload": "Or upload a photo",
             "photo_question": "What would you like to know about this photo?",
             "photo_question_placeholder": "For example: Describe the visible skin change",
             "photo_consent": "I agree to send this photo to Gemini for general information",
             "photo_scan": "Scan photo",
             "photo_missing": "Capture a photo first.",
             "photo_consent_required": "Confirm photo sharing before scanning.",
-            "photo_provider_required": "Photo scan needs a Gemini API key. The photo was not sent.",
+            "photo_provider_required": "Photo scanning isn't available right now. The photo was not sent.",
             "photo_default_question": "Describe only visible features in this photo and give general, non-diagnostic guidance. Mention uncertainty and when to seek professional care.",
-            "provider_info": "Gemini is used for chat when GEMINI_API_KEY is set.",
-            "voice_key_info": "Voice requires a Gemini key or an NVIDIA key with Riva access.",
+            "provider_info": "Chat replies are powered by Gemini when available.",
+            "voice_key_info": "Voice needs an available AI speech service.",
             "voice_enabled": "Enable voice",
                         "voice_consent": "Send my recording to {provider} for transcription and a reply",
                         "microphone_permission_help": "Your browser will ask for microphone access when you press Record. If access was blocked before, allow it in this site's browser settings and reload.",
@@ -74,8 +76,15 @@ LANGUAGES = {
             "voice_playback_error": "Voice playback could not be generated",
             "retry_voice": "Retry spoken reply",
             "said": "You said",
-            "reply_error": "Couldn't get a response",
-            "thinking": "Preparing a careful response...",
+            "reply_error": "Sorry, I couldn't get a response right now. Please try again shortly.",
+            "voice_error_message": "Voice input isn't available right now. Please try again shortly.",
+            "voice_playback_error_message": "Spoken replies aren't available right now. Please try again shortly.",
+            "voice_playback_help": "If playback doesn't start automatically, press Play below.",
+            "voice_playback_alt": "DrHealth AI spoken reply",
+            "speak_reply": "Speak reply",
+            "voice_demo": "Hear AI voice",
+            "stop_speaking": "Stop speaking",
+            "speech_unavailable": "Speech playback isn't available in this browser. Try Chrome.",
         },
         "red_flag": "This could be an emergency. Please contact your local emergency services now or go to the nearest emergency department. If possible, ask someone nearby to stay with you. I can't assess or rule out an emergency in chat.",
     },
@@ -92,18 +101,19 @@ LANGUAGES = {
             "medications": "दवाइयाँ (वैकल्पिक)",
             "privacy": "आपकी स्वास्थ्य जानकारी और आवाज़ AI सेवा को भेजी जाती है। नाम या पहचान बताने वाली जानकारी न दें।",
             "photo_section": "कैमरे से स्कैन करें (वैकल्पिक)",
-            "photo_help": "प्रभावित हिस्से की फ़ोटो लें। फ़ोटो इस ऐप पर अपलोड होती है और सहमति देकर स्कैन करने पर ही Gemini को भेजी जाती है। चेहरा या पहचान बताने वाली जानकारी न दिखाएँ।",
+            "photo_help": "प्रभावित हिस्से की फ़ोटो लें या अपलोड करें। सहमति देकर स्कैन करने पर ही फ़ोटो Gemini को भेजी जाती है। चेहरा या पहचान बताने वाली जानकारी न दिखाएँ।",
             "photo_capture": "फ़ोटो लें",
+            "photo_upload": "या फ़ोटो अपलोड करें",
             "photo_question": "इस फ़ोटो के बारे में क्या जानना चाहते हैं?",
             "photo_question_placeholder": "उदाहरण: त्वचा पर दिख रहे बदलाव का वर्णन करें",
             "photo_consent": "मैं सामान्य जानकारी के लिए यह फ़ोटो Gemini को भेजने की सहमति देता/देती हूँ",
             "photo_scan": "फ़ोटो स्कैन करें",
             "photo_missing": "पहले फ़ोटो लें।",
             "photo_consent_required": "स्कैन करने से पहले फ़ोटो भेजने की सहमति दें।",
-            "photo_provider_required": "फ़ोटो स्कैन के लिए Gemini API key चाहिए। फ़ोटो नहीं भेजी गई।",
+            "photo_provider_required": "अभी फ़ोटो स्कैन उपलब्ध नहीं है। फ़ोटो नहीं भेजी गई।",
             "photo_default_question": "इस फ़ोटो में केवल दिखाई देने वाली बातों का वर्णन करें और सामान्य, गैर-निदानात्मक जानकारी दें। अनिश्चितता और डॉक्टर से कब संपर्क करना चाहिए, यह बताएँ।",
-            "provider_info": "GEMINI_API_KEY सेट होने पर चैट के लिए Gemini का उपयोग होगा।",
-            "voice_key_info": "आवाज़ के लिए Gemini कुंजी या Riva सुविधा वाली NVIDIA कुंजी चाहिए।",
+            "provider_info": "उपलब्ध होने पर चैट के जवाब Gemini से मिलते हैं।",
+            "voice_key_info": "आवाज़ के लिए AI speech service उपलब्ध होनी चाहिए।",
             "voice_enabled": "आवाज़ चालू करें",
                         "voice_consent": "रिकॉर्डिंग को ट्रांसक्रिप्शन और जवाब के लिए {provider} को भेजें",
                         "microphone_permission_help": "रिकॉर्ड करें दबाने पर ब्राउज़र माइक्रोफ़ोन की अनुमति माँगेगा। पहले रोक दिया हो तो साइट की ब्राउज़र सेटिंग में अनुमति देकर पेज फिर से लोड करें।",
@@ -128,8 +138,15 @@ LANGUAGES = {
             "voice_playback_error": "आवाज़ में जवाब तैयार नहीं हो सका",
             "retry_voice": "बोला हुआ जवाब फिर से चलाएँ",
             "said": "आपने कहा",
-            "reply_error": "जवाब नहीं मिल सका",
-            "thinking": "सावधानी से जवाब तैयार हो रहा है...",
+            "reply_error": "अभी जवाब नहीं मिल सका। कृपया थोड़ी देर बाद फिर कोशिश करें।",
+            "voice_error_message": "अभी आवाज़ से इनपुट उपलब्ध नहीं है। कृपया थोड़ी देर बाद फिर कोशिश करें।",
+            "voice_playback_error_message": "अभी बोला हुआ जवाब उपलब्ध नहीं है। कृपया थोड़ी देर बाद फिर कोशिश करें।",
+            "voice_playback_help": "अगर आवाज़ अपने-आप शुरू न हो, तो नीचे Play दबाएँ।",
+            "voice_playback_alt": "DrHealth AI का बोला हुआ जवाब",
+            "speak_reply": "जवाब सुनें",
+            "voice_demo": "AI की आवाज़ सुनें",
+            "stop_speaking": "आवाज़ रोकें",
+            "speech_unavailable": "इस ब्राउज़र में आवाज़ उपलब्ध नहीं है। Chrome आज़माएँ।",
         },
         "red_flag": "यह आपात स्थिति हो सकती है। अभी अपनी स्थानीय आपातकालीन सेवा से संपर्क करें या नज़दीकी आपातकालीन विभाग जाएँ। हो सके तो किसी व्यक्ति को अपने पास रहने के लिए कहें। मैं चैट में आपात स्थिति का आकलन या उसे खारिज नहीं कर सकता।",
     },
@@ -145,7 +162,8 @@ diagnosis, suggest only low-risk general self-care, say when to contact a clinic
 and list relevant warning signs that need urgent care.
 For potentially urgent symptoms, advise prompt professional evaluation rather
 than trying to rule out an emergency. Keep answers concise, empathetic, and
-plain-language. If an image is provided, describe only visible features, do not
+plain-language. Never reveal private chain-of-thought or internal analysis; give
+only the concise user-facing answer. If an image is provided, describe only visible features, do not
 diagnose from the image, and say when the image is unclear. Do not claim that
 you examined the user or reviewed records."""
 
@@ -165,6 +183,68 @@ DOCTOR_ILLUSTRATION = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22
 <path d="M101 85q9 7 18 0" fill="none" stroke="#8d4e43" stroke-width="2" stroke-linecap="round"/>
 </svg>"""
 DOCTOR_HOSPITAL_IMAGE = Path(__file__).parent / "assets" / "doctor_hospital.svg"
+
+_BROWSER_SPEECH = st.components.v2.component(
+    "drhealth_browser_speech",
+    html="""
+    <div class="speech-controls">
+      <button class="speak" type="button"></button>
+      <button class="stop" type="button"></button>
+      <span class="speech-status" role="status" aria-live="polite"></span>
+    </div>
+    """,
+    css="""
+    .speech-controls { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+    button { border: 1px solid #9dbac2; border-radius: 999px; padding: .35rem .8rem;
+      color: #173d50; background: #f5fbfd; font: inherit; cursor: pointer; }
+    button:hover { background: #e6f3f6; }
+    .speech-status { color: #56717e; font-size: .8rem; }
+    """,
+    js="""
+    export default function (component) {
+      const { data, parentElement } = component
+      const speak = parentElement.querySelector(".speak")
+      const stop = parentElement.querySelector(".stop")
+      const status = parentElement.querySelector(".speech-status")
+      if (!speak || !stop || !status) return
+
+      speak.textContent = data.speakLabel
+      stop.textContent = data.stopLabel
+      stop.disabled = !("speechSynthesis" in window)
+      speak.disabled = !("speechSynthesis" in window)
+
+      speak.onclick = () => {
+        if (!("speechSynthesis" in window)) {
+          status.textContent = data.unavailableLabel
+          return
+        }
+        window.speechSynthesis.cancel()
+        const utterance = new SpeechSynthesisUtterance(data.text)
+        utterance.lang = data.language
+        utterance.pitch = 0.82
+        utterance.rate = 0.96
+        utterance.onstart = () => { status.textContent = "" }
+        utterance.onerror = () => { status.textContent = data.unavailableLabel }
+        const voices = window.speechSynthesis.getVoices()
+        const language = data.language.toLowerCase().split("-")[0]
+        const matchingVoices = voices.filter(voice =>
+          voice.lang.toLowerCase().startsWith(language)
+        )
+        const preferredVoice = matchingVoices.find(voice =>
+          /google.*(male|uk english)|david|daniel|natural/i.test(voice.name)
+        )
+        if (preferredVoice) utterance.voice = preferredVoice
+        window.speechSynthesis.speak(utterance)
+      }
+
+      stop.onclick = () => {
+        if ("speechSynthesis" in window) window.speechSynthesis.cancel()
+        status.textContent = ""
+      }
+    }
+    """,
+)
+
 
 HERO_STYLES = """
 <style>
@@ -208,6 +288,19 @@ HERO_STYLES = """
 """
 
 
+def _render_browser_speech(text, language, ui, key, speak_label=None):
+    _BROWSER_SPEECH(
+        key=key,
+        data={
+            "text": _speech_text(text),
+            "language": LANGUAGES[language]["code"],
+            "speakLabel": speak_label or ui["speak_reply"],
+            "stopLabel": ui["stop_speaking"],
+            "unavailableLabel": ui["speech_unavailable"],
+        },
+    )
+
+
 def _emergency_message(text, language="English"):
     """Return urgent-care guidance for explicit red-flag symptom phrases."""
     patterns = (
@@ -231,11 +324,33 @@ def _emergency_message(text, language="English"):
             return LANGUAGES[language]["red_flag"]
     return None
 
+
+def _api_key(name):
+    """Read provider credentials from the environment or Streamlit secrets."""
+    value = os.getenv(name)
+    if value:
+        return value
+    try:
+        return st.secrets.get(name)
+    except st.errors.StreamlitSecretNotFoundError:
+        return None
+
+
+def _log_provider_error(action, exc):
+    logging.getLogger(__name__).warning(
+        "%s failed (%s).", action, type(exc).__name__
+    )
+
+
 def _gemini_user_content(text, image):
     if image is None:
         return text
-    image_type = image.type or "image/jpeg"
-    encoded_image = base64.b64encode(image.getvalue()).decode("ascii")
+    if isinstance(image, tuple):
+        image_bytes, image_type = image
+    else:
+        image_bytes = image.getvalue()
+        image_type = image.type or "image/jpeg"
+    encoded_image = base64.b64encode(image_bytes).decode("ascii")
     return [
         {"type": "text", "text": text},
         {
@@ -246,8 +361,8 @@ def _gemini_user_content(text, image):
 
 
 def _assistant_reply(messages, profile, model=None, language="English", image=None):
-    gemini_api_key = os.getenv("GEMINI_API_KEY")
-    nvidia_api_key = os.getenv("NVIDIA_API_KEY")
+    gemini_api_key = _api_key("GEMINI_API_KEY")
+    nvidia_api_key = _api_key("NVIDIA_API_KEY")
     if image is not None and not gemini_api_key:
         raise RuntimeError("Photo review needs a Gemini API key. The photo was not sent.")
     if gemini_api_key:
@@ -394,7 +509,7 @@ def _interaction_text(result):
 
 
 def _transcribe_with_gemini(audio_file, language="English"):
-    api_key = os.getenv("GEMINI_API_KEY")
+    api_key = _api_key("GEMINI_API_KEY")
     if not api_key:
         raise RuntimeError("Set GEMINI_API_KEY to transcribe audio with Gemini.")
 
@@ -503,9 +618,9 @@ def _transcribe_with_gemini(audio_file, language="English"):
 
 
 def _transcribe_audio(audio_file, language="English"):
-    if os.getenv("GEMINI_API_KEY"):
+    if _api_key("GEMINI_API_KEY"):
         return _transcribe_with_gemini(audio_file, language)
-    if os.getenv("NVIDIA_API_KEY"):
+    if _api_key("NVIDIA_API_KEY"):
         from Nvidia_Speech import transcribe
 
         return transcribe(audio_file, language_code=LANGUAGES[language]["code"])
@@ -516,12 +631,11 @@ def _transcribe_audio(audio_file, language="English"):
 
 
 def _synthesize_with_gemini(text, language="English"):
-    api_key = os.getenv("GEMINI_API_KEY")
+    api_key = _api_key("GEMINI_API_KEY")
     if not api_key:
         raise RuntimeError("Set GEMINI_API_KEY to generate voice playback with Gemini.")
 
     payload = {
-        "model": GEMINI_TTS_MODEL,
         "input": [
             {
                 "type": "user_input",
@@ -533,9 +647,18 @@ def _synthesize_with_gemini(text, language="English"):
                             {
                                 "type": "speech_metadata",
                                 "style": (
-                                    "calm and friendly, speak naturally in Hindi"
+                                    "Use an original low-pitched, calm, precise, "
+                                    "polished synthetic AI-assistant voice. Speak at "
+                                    "a measured pace with crisp articulation and "
+                                    "subtle warmth; do not imitate any existing "
+                                    "character or actor. Speak naturally in Hindi."
                                     if language == "हिन्दी"
-                                    else "calm and friendly, speak naturally in English"
+                                    else
+                                    "Use an original low-pitched, calm, precise, "
+                                    "polished synthetic AI-assistant voice. Speak at "
+                                    "a measured pace with crisp articulation and "
+                                    "subtle warmth; do not imitate any existing "
+                                    "character or actor. Speak naturally in English."
                                 ),
                             }
                         ],
@@ -546,24 +669,35 @@ def _synthesize_with_gemini(text, language="English"):
         "response_format": {"type": "audio"},
         "generation_config": {"speech_config": [{"voice": "Kore"}]},
     }
-    request = urllib.request.Request(
-        "https://generativelanguage.googleapis.com/v1beta/interactions",
-        data=json.dumps(payload).encode("utf-8"),
-        headers={
-            "x-goog-api-key": api_key,
-            "Content-Type": "application/json",
-        },
-        method="POST",
-    )
-    try:
-        with urllib.request.urlopen(request, timeout=60) as response:
-            result = json.loads(response.read().decode("utf-8"))
-    except urllib.error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", errors="replace")
-        raise RuntimeError(
-            f"Gemini voice generation failed ({exc.code}): {detail[:400]}"
-        ) from exc
+    result = None
+    for model in (GEMINI_TTS_MODEL, GEMINI_TTS_FALLBACK_MODEL):
+        model_payload = {**payload, "model": model}
+        try:
+            result = _gemini_request(
+                "https://generativelanguage.googleapis.com/v1beta/interactions",
+                api_key,
+                model_payload,
+                timeout=60,
+            )
+            break
+        except RuntimeError as exc:
+            status = re.search(r"\((\d{3})\)", str(exc))
+            retryable_status = int(status.group(1)) if status else None
+            if (
+                model == GEMINI_TTS_MODEL
+                and retryable_status in {404, 429, 500, 502, 503, 504}
+            ):
+                continue
+            raise
 
+    if result is None:
+        raise RuntimeError("Gemini returned no voice response.")
+    output_audio = result.get("output_audio")
+    if isinstance(output_audio, dict) and output_audio.get("data"):
+        try:
+            return base64.b64decode(output_audio["data"], validate=True)
+        except binascii.Error as exc:
+            raise RuntimeError("Gemini returned invalid audio data.") from exc
     for output in reversed(result.get("outputs", [])):
         if output.get("type") == "audio" and output.get("data"):
             try:
@@ -592,9 +726,9 @@ def _speech_text(text):
 
 def _synthesize_reply(text, language="English"):
     text = _speech_text(text)
-    if os.getenv("GEMINI_API_KEY"):
+    if _api_key("GEMINI_API_KEY"):
         return _synthesize_with_gemini(text, language)
-    if os.getenv("NVIDIA_API_KEY"):
+    if _api_key("NVIDIA_API_KEY"):
         from Nvidia_Speech import synthesize
 
         return synthesize(text, language_code=LANGUAGES[language]["code"])
@@ -629,15 +763,26 @@ with st.sidebar:
     conditions = st.text_input(ui["conditions"])
     medications = st.text_input(ui["medications"])
     st.caption(ui["privacy"])
-    if not os.getenv("GEMINI_API_KEY"):
+    if not _api_key("GEMINI_API_KEY"):
         st.caption(ui["provider_info"])
-    if not os.getenv("GEMINI_API_KEY") and not os.getenv("NVIDIA_API_KEY"):
+    if not _api_key("GEMINI_API_KEY") and not _api_key("NVIDIA_API_KEY"):
         st.caption(ui["voice_key_info"])
     voice_enabled = st.toggle(ui["voice_enabled"], value=False)
     voice_consent = False
     if voice_enabled:
         st.caption(ui["microphone_permission_help"])
-        voice_provider = "Gemini" if os.getenv("GEMINI_API_KEY") else "NVIDIA"
+        _render_browser_speech(
+            (
+                "Hello, I am your DrHealth AI assistant. How can I help you today?"
+                if language == "English"
+                else "नमस्ते, मैं आपका DrHealth AI सहायक हूँ। आज मैं आपकी कैसे मदद कर सकता हूँ?"
+            ),
+            language,
+            ui,
+            "browser_speech_demo",
+            ui["voice_demo"],
+        )
+        voice_provider = "Gemini" if _api_key("GEMINI_API_KEY") else "NVIDIA"
         voice_consent = st.checkbox(
             ui["voice_consent"].format(provider=voice_provider),
             key="voice_provider_consent",
@@ -652,6 +797,11 @@ with st.expander(ui["photo_section"], expanded=False):
     captured_photo = st.camera_input(
         ui["photo_capture"],
         key=f"photo_capture_{photo_version}",
+    )
+    uploaded_photo = st.file_uploader(
+        ui["photo_upload"],
+        type=("jpg", "jpeg", "png", "webp"),
+        key=f"photo_upload_{photo_version}",
     )
     photo_question = st.text_input(
         ui["photo_question"],
@@ -668,15 +818,20 @@ with st.expander(ui["photo_section"], expanded=False):
     )
 
 if scan_photo:
-    if captured_photo is None:
+    selected_photo = uploaded_photo or captured_photo
+    if selected_photo is None:
         st.error(ui["photo_missing"])
     elif not photo_consent:
         st.error(ui["photo_consent_required"])
-    elif not os.getenv("GEMINI_API_KEY"):
+    elif not _api_key("GEMINI_API_KEY"):
         st.error(ui["photo_provider_required"])
     else:
         st.session_state.pending_prompt = (
             photo_question.strip() or ui["photo_default_question"]
+        )
+        st.session_state.pending_photo_data = (
+            selected_photo.getvalue(),
+            selected_photo.type or "image/jpeg",
         )
         st.session_state.pending_photo_scan = True
         st.session_state.photo_input_version = photo_version + 1
@@ -740,11 +895,18 @@ if assess_symptoms:
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-for message in st.session_state.messages:
+for message_index, message in enumerate(st.session_state.messages):
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
+        if message["role"] == "assistant" and voice_enabled:
+            _render_browser_speech(
+                message["content"],
+                language,
+                ui,
+                f"browser_speech_{message_index}",
+            )
 
-if voice_enabled:
+if voice_enabled and voice_consent:
     audio = st.audio_input(
         ui["record"],
         sample_rate=16000,
@@ -757,7 +919,8 @@ if voice_enabled:
             try:
                 prompt = _transcribe_audio(audio, language)
             except (ImportError, OSError, RuntimeError, ValueError) as exc:
-                st.session_state.voice_error = str(exc)
+                _log_provider_error("Voice transcription", exc)
+                st.session_state.voice_error = ui["voice_error_message"]
                 prompt = ""
             else:
                 st.session_state.voice_error = ""
@@ -768,7 +931,7 @@ if voice_enabled:
                 st.session_state.pending_prompt = prompt
         if st.session_state.get("last_transcript_digest") != audio_digest:
             if st.session_state.get("voice_error"):
-                st.error(f"{ui['voice_error']}: {st.session_state.voice_error}")
+                st.error(st.session_state.voice_error)
             else:
                 st.warning(ui["no_speech"])
             if st.button(ui["retry"], key="retry_transcription"):
@@ -779,7 +942,7 @@ prompt = st.chat_input(ui["chat"])
 if not prompt:
     prompt = st.session_state.pop("pending_prompt", None)
 photo_for_prompt = (
-    captured_photo
+    st.session_state.pop("pending_photo_data", None)
     if st.session_state.pop("pending_photo_scan", False)
     else None
 )
@@ -797,31 +960,46 @@ if prompt:
     else:
         try:
             with st.chat_message("assistant"):
-                with st.spinner(ui["thinking"]):
-                    reply = st.write_stream(
-                        _assistant_reply(
-                            st.session_state.messages,
-                            _profile_context(age, conditions, medications),
-                            language=language,
-                            image=photo_for_prompt,
-                        )
+                reply = "".join(
+                    _assistant_reply(
+                        st.session_state.messages,
+                        _profile_context(age, conditions, medications),
+                        language=language,
+                        image=photo_for_prompt,
+                    )
+                )
+                st.markdown(reply)
+                if voice_enabled:
+                    _render_browser_speech(
+                        reply,
+                        language,
+                        ui,
+                        f"browser_speech_latest_{len(st.session_state.messages)}",
                     )
         except (RuntimeError, OpenAIError) as exc:
-            error_label = "जवाब नहीं मिल सका" if language == "हिन्दी" else ui["reply_error"]
-            st.error(f"{error_label}: {exc}")
+            _log_provider_error("AI reply", exc)
+            st.session_state.messages.pop()
+            st.error(ui["reply_error"])
             reply = None
 
     if reply:
         st.session_state.messages.append({"role": "assistant", "content": reply})
-        if voice_enabled:
+        if voice_enabled and voice_consent:
             try:
                 audio_reply = _synthesize_reply(reply, language)
             except (ImportError, OSError, RuntimeError, ValueError) as exc:
+                _log_provider_error("Voice playback", exc)
                 st.session_state.voice_reply_pending = reply
                 st.session_state.voice_reply_language = language
-                st.error(f"{ui['voice_playback_error']}: {exc}")
+                st.error(ui["voice_playback_error_message"])
             else:
-                st.audio(audio_reply, format="audio/wav", autoplay=True)
+                st.audio(
+                    audio_reply,
+                    format="audio/wav",
+                    autoplay=True,
+                    alt=ui["voice_playback_alt"],
+                )
+                st.caption(ui["voice_playback_help"])
                 st.session_state.pop("voice_reply_pending", None)
                 st.session_state.pop("voice_reply_language", None)
 
@@ -833,8 +1011,15 @@ if st.session_state.get("voice_reply_pending"):
                 st.session_state.voice_reply_language,
             )
         except (ImportError, OSError, RuntimeError, ValueError) as exc:
-            st.error(f"{ui['voice_playback_error']}: {exc}")
+            _log_provider_error("Voice playback retry", exc)
+            st.error(ui["voice_playback_error_message"])
         else:
-            st.audio(audio_reply, format="audio/wav", autoplay=True)
+            st.audio(
+                audio_reply,
+                format="audio/wav",
+                autoplay=True,
+                alt=ui["voice_playback_alt"],
+            )
+            st.caption(ui["voice_playback_help"])
             del st.session_state["voice_reply_pending"]
             del st.session_state["voice_reply_language"]
