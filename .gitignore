@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.streamlit/secrets.toml
+.env
+.env.*
+!.env.example
+*.pem
+*.p8
+*.key
+RunQL/system/connections.json
